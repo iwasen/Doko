@@ -8,10 +8,10 @@
 import UIKit
 import AVFoundation
 
-let TEXT1_HEIGHT:CGFloat = 690
-let TEXT2_HEIGHT:CGFloat = 720
-let PAGE_SPACE:CGFloat = 30
-let ZOOM_SPEED = 10.0
+private let TEXT1_HEIGHT:CGFloat = 690
+private let TEXT2_HEIGHT:CGFloat = 720
+private let PAGE_SPACE:CGFloat = 30
+private let ZOOM_SPEED = 10.0
 
 struct SentenceData {
     var sentence: String!
@@ -40,24 +40,24 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     @IBOutlet var endButton: UIButton!
     @IBOutlet var endMarkView: UIImageView!     // ページ終了マークビュー
 
-    var bgMovie: AVPlayer!                      // BGムービー
-    var bgMovieLayer: AVPlayerLayer!
-    var textFont: UIFont!                       // テキスト用フォント
-    var midashiFont: UIFont!                    // 小見出し用フォント
-    var sentenceArray: [SentenceData]!          // 語句の配列
-    var readDataArray: [ReadData]!              // 読み上げデータの配列
-    var currentPage: Int = 0                    // 現在ページ
-    var sentenceCounter: Int = 0                // 語句読み上げカウンタ
-    var readCounter: Int = 0                    // テキスト読み上げカウンタ
-    var pageControlUsed: Bool = false           // ページ制御中フラグ
-    var bgViews = [UIView?](repeating: nil, count: PAGE_NUM)    // ページ毎のBGビュー配列
-    var bgImageViews = [UIImageView?](repeating: nil, count: PAGE_NUM)  // ページ毎の静止画ビュー配列
-    var scrollFlag: Bool = false                // スクロール中フラグ
-    var enableTouch: Bool = false               // タッチ有効フラグ
-    var indexAnimationFlag = false
+    private var bgMovie: AVPlayer!                      // BGムービー
+    private var bgMovieLayer: AVPlayerLayer!
+    private var textFont: UIFont!                       // テキスト用フォント
+    private var midashiFont: UIFont!                    // 小見出し用フォント
+    private var sentenceArray: [SentenceData]!          // 語句の配列
+    private var readDataArray: [ReadData]!              // 読み上げデータの配列
+    private var currentPage: Int = 0                    // 現在ページ
+    private var sentenceCounter: Int = 0                // 語句読み上げカウンタ
+    private var readCounter: Int = 0                    // テキスト読み上げカウンタ
+    private var pageControlUsed: Bool = false           // ページ制御中フラグ
+    private var bgViews = [UIView?](repeating: nil, count: PAGE_NUM)    // ページ毎のBGビュー配列
+    private var bgImageViews = [UIImageView?](repeating: nil, count: PAGE_NUM)  // ページ毎の静止画ビュー配列
+    private var scrollFlag: Bool = false                // スクロール中フラグ
+    private var enableTouch: Bool = false               // タッチ有効フラグ
+    private var indexAnimationFlag = false
 
-    var bgmAudio: AVAudioPlayer!
-    var readAudio: AVAudioPlayer!
+    private var bgmAudio: AVAudioPlayer!
+    private var readAudio: AVAudioPlayer!
 
     override func viewDidLoad() {
         super.viewDidLoad()

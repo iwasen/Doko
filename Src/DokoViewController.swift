@@ -33,10 +33,10 @@ class DokoViewController: UIViewController {
     @IBOutlet var websiteButton: UIButton!
     @IBOutlet var submenuImageView: UIImageView!
 
-    var openingMovieLayer: AVPlayerLayer!
-    var bgAudio: AVAudioPlayer!
-    var inOpeningMovie: Bool = false
-    var openingSkipFlag: Bool = false
+    private var openingMovieLayer: AVPlayerLayer!
+    private var bgAudio: AVAudioPlayer!
+    private var inOpeningMovie: Bool = false
+    private var openingSkipFlag: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()

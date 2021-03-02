@@ -7,27 +7,28 @@
 
 import UIKit
 
-protocol IndexViewDelegete: NSObject
+protocol IndexViewDelegete
 {
     func selectPage(page: Int)
 }
 
-let THUMBNAIL_WIDTH: CGFloat = 50
-let THUMBNAIL_HEIGHT: CGFloat = 50
-let SELECTED_THUMBNAIL_WIDTH: CGFloat = 75
-let SELECTED_THUMBNAIL_HEIGHT: CGFloat = 75
-let THUMBNAIL_SPACE: CGFloat = 10
-let THUMBNAIL_OFFSET: CGFloat = 80
 let INDEX_HEIGHT: CGFloat = 70
+
+private let THUMBNAIL_WIDTH: CGFloat = 50
+private let THUMBNAIL_HEIGHT: CGFloat = 50
+private let SELECTED_THUMBNAIL_WIDTH: CGFloat = 75
+private let SELECTED_THUMBNAIL_HEIGHT: CGFloat = 75
+private let THUMBNAIL_SPACE: CGFloat = 10
+private let THUMBNAIL_OFFSET: CGFloat = 80
 
 class IndexView: UIView {
     var indexViewDelegate: IndexViewDelegete?
     var openFlag: Bool = false
 
-    var thumbnailViews: [ThumbnailView] = []
-    var currentPage: Int = 0
-    var animationFlag: Bool = false
-    var endAnimationCallback: (() -> Void)?
+    private var thumbnailViews: [ThumbnailView] = []
+    private var currentPage: Int = 0
+    private var animationFlag: Bool = false
+    private var endAnimationCallback: (() -> Void)?
 
     override func awakeFromNib()
     {
@@ -46,15 +47,6 @@ class IndexView: UIView {
         
         setThumbnailsPosition(page: -1)
     }
-
-    /*
-    // Only override drawRect: if you perform custom drawing.
-    // An empty implementation adversely affects performance during animation.
-    - (void)drawRect:(CGRect)rect
-    {
-        // Drawing code
-    }
-    */
 
     // サムネイルタッチ処理
     func touchThumbnail(page: Int)

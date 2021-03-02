@@ -38,7 +38,7 @@ struct ReadZoomData {
 }
 
 // 1ページ
-let playItemDataP01 = [
+private let playItemDataP01 = [
     PlayItemData(itemName: ["あひる2ひき", "two ducks"],
                  atariRect: CGRect(x: 171, y: 51, width: 29, height: 26),
                  soundFile: ["kddk1j_wo0001_01ahirunihiki", "kddk1e_wo0001_01twoducks"]),
@@ -60,7 +60,7 @@ let playItemDataP01 = [
 ]
 
 // 2ページ
-let playItemDataP02 = [
+private let playItemDataP02 = [
     PlayItemData(itemName: ["ゆきだるま", "a snowman"],
                  atariRect: CGRect(x: 648, y: 311, width: 22, height: 34),
                  soundFile: ["kddk1j_wo0017_02yukidaruma", "kddk1e_wo0017_02asnowman"]),
@@ -94,7 +94,7 @@ let playItemDataP02 = [
 ]
 
 // 3ページ
-let playItemDataP03 = [
+private let playItemDataP03 = [
     PlayItemData(itemName: ["しか", "a deer"],
                  atariRect: CGRect(x: 472, y: 506, width: 68, height: 95),
                  soundFile: ["kddk1j_wo0033_03sika", "kddk1e_wo0033_03adeer"]),
@@ -119,7 +119,7 @@ let playItemDataP03 = [
 ]
 
 // 4ページ
-let playItemDataP04 = [
+private let playItemDataP04 = [
     PlayItemData(itemName: ["とりのはね", "a bird feather"],
                  atariRect: CGRect(x: 705, y: 231, width: 80, height: 73),
                  soundFile: ["kddk1j_wo0043_04torinohane", "kddk1e_wo0043_04abirdfeather"]),
@@ -147,7 +147,7 @@ let playItemDataP04 = [
 ]
 
 // 5ページ
-let playItemDataP05 = [
+private let playItemDataP05 = [
     PlayItemData(itemName: ["ピザ", "a pizza"],
                  atariRect: CGRect(x: 529, y: 516, width: 53, height: 32),
                  soundFile: ["kddk1j_wo0051_05piza", "kddk1e_wo0051_05apizza"]),
@@ -178,7 +178,7 @@ let playItemDataP05 = [
 ]
 
 // 6ページ
-let playItemDataP06 = [
+private let playItemDataP06 = [
     PlayItemData(itemName: ["うさぎ", "a rabbit"],
                  atariRect: CGRect(x: 456, y: 514, width: 62, height: 51),
                  soundFile: ["kddk1j_wo0062_06usagi", "kddk1e_wo0062_06arabbit"]),
@@ -212,7 +212,7 @@ let playItemDataP06 = [
 ]
 
 // 7ページ
-let playItemDataP07 = [
+private let playItemDataP07 = [
     PlayItemData(itemName: ["つくえ", "a desk"],
                  atariRect: CGRect(x: 687, y: 597, width: 27, height: 24),
                  soundFile: ["kddk1j_wo0080_07tukue", "kddk1e_wo0080_07adesk"]),
@@ -243,7 +243,7 @@ let playItemDataP07 = [
 ]
 
 // 8ページ
-let playItemDataP08 = [
+private let playItemDataP08 = [
     PlayItemData(itemName: ["フォーク", "a fork"],
                  atariRect: CGRect(x: 302, y: 352, width: 35, height: 30),
                  soundFile: ["kddk1j_wo0092_08fouku", "kddk1e_wo0092_08afork"]),
@@ -274,7 +274,7 @@ let playItemDataP08 = [
 ]
 
 // 9ページ
-let playItemDataP09 = [
+private let playItemDataP09 = [
     PlayItemData(itemName: ["さんかくのまど", "a triangular window "],
                  atariRect: CGRect(x: 696, y: 511, width: 29, height: 28),
                  soundFile: ["kddk1j_wo0101_09sankakunomado", "kddk1e_wo0101_09atriangularwindow"]),
@@ -308,7 +308,7 @@ let playItemDataP09 = [
 ]
 
 // 10ページ
-let playItemDataP10 = [
+private let playItemDataP10 = [
     PlayItemData(itemName: ["つき", "a moon"],
                  atariRect: CGRect(x: 24, y: 473, width: 125, height: 81),
                  soundFile: ["kddk1j_wo0111_10tuki", "kddk1e_wo0111_10amoon"]),
@@ -339,7 +339,7 @@ let playItemDataP10 = [
 ]
 
 // 11ページ
-let playItemDataP11 = [
+private let playItemDataP11 = [
     PlayItemData(itemName: ["めんどり", "a hen"],
                  atariRect: CGRect(x: 259, y: 100, width: 73, height: 53),
                  soundFile: ["kddk1j_wo0125_11mendori", "kddk1e_wo0125_11ahen"]),
@@ -373,7 +373,7 @@ let playItemDataP11 = [
 ]
 
 // 12ページ
-let playItemDataP12 = [
+private let playItemDataP12 = [
     PlayItemData(itemName: ["ちきゅうぎ", "a globe"],
                  atariRect: CGRect(x: 384, y: 316, width: 55, height: 99),
                  soundFile: ["kddk1j_wo0139_12tikyuugi", "kddk1e_wo0139_12aglobe"]),
@@ -407,7 +407,7 @@ let playItemDataP12 = [
 ]
 
 // 13ページ
-let playItemDataP13 = [
+private let playItemDataP13 = [
     PlayItemData(itemName: ["ふくろう", "an owl"],
                  atariRect: CGRect(x: 701, y: 504, width: 86, height: 52),
                  soundFile: ["kddk1j_wo0150_13hukurou", "kddk1e_wo0150_13anowl"]),
@@ -440,7 +440,7 @@ let playItemDataP13 = [
 ]
 
 // 14ページ
-let playItemDataP14 = [
+private let playItemDataP14 = [
     PlayItemData(itemName: ["5", "the number of five"],
                  atariRect: CGRect(x: 201, y: 415, width: 78, height: 54),
                  soundFile: ["kddk1j_wo0162_14go", "kddk1e_wo0162_14thenumberoffive"]),
@@ -474,7 +474,7 @@ let playItemDataP14 = [
 ]
 
 // 15ページ
-let playItemDataP15 = [
+private let playItemDataP15 = [
     PlayItemData(itemName: ["Ａ", "a striped letter Ａ"],
                  atariRect: CGRect(x: 32, y: 557, width: 36, height: 44),
                  soundFile: ["kddk1j_wo0173_15a", "kddk1e_wo0173_15astripedlettera"]),
@@ -508,7 +508,7 @@ let playItemDataP15 = [
 ]
 
 // ページ毎アイテムデータ
-let playPageData = [
+private let playPageData = [
     PlayPageData(itemData: playItemDataP01, itemNum: playItemDataP01.count),
     PlayPageData(itemData: playItemDataP02, itemNum: playItemDataP02.count),
     PlayPageData(itemData: playItemDataP03, itemNum: playItemDataP03.count),
@@ -527,7 +527,7 @@ let playPageData = [
 ]
 
 // よむモード（中心座標xy,倍率）
-let readZoomData = [
+private let readZoomData = [
     ReadZoomData(point: CGPoint(x: 397, y: 158), ratio: 2.56),  // 1ページ
     ReadZoomData(point: CGPoint(x: 333, y: 494), ratio: 2.56),  // 2ページ
     ReadZoomData(point: CGPoint(x: 815, y: 156), ratio: 2.56),  // 3ページ

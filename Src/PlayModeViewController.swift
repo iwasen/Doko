@@ -32,32 +32,28 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     @IBOutlet var completeJpnImageView: UIImageView!   // コンプリート文字ビュー（日本語）
     @IBOutlet var completeEngImageView: UIImageView!   // コンプリート文字ビュー（英語）
 
-    var bgMovie: AVPlayer!                  // 背景動画
-    var bgMovieLayer: AVPlayerLayer!
+    private var bgMovie: AVPlayer!                  // 背景動画
+    private var bgMovieLayer: AVPlayerLayer!
 
-    var currentPage = 0                     // 現在ページ
-    var itemCount = 0                       // アイテム名読み上げカウンタ
-    var readStopFlag = false                // よむモード終了フラグ
-    var readTextTimer: Timer!               // アイテム名読み上げタイマー
-    var completeCounter = 0                 // コンプリートアニメーションカウンタ
-    var completeImageView: UIImageView!     // コンプリート文字ビュー
-    var completeStopFlag = false            // コンプリート停止フラグ
-    var enableTouch = false                 // タッチ有効フラグ
-    var indexAnimationFlag = false
+    private var currentPage = 0                     // 現在ページ
+    private var itemCount = 0                       // アイテム名読み上げカウンタ
+    private var readStopFlag = false                // よむモード終了フラグ
+    private var readTextTimer: Timer!               // アイテム名読み上げタイマー
+    private var completeCounter = 0                 // コンプリートアニメーションカウンタ
+    private var completeImageView: UIImageView!     // コンプリート文字ビュー
+    private var completeStopFlag = false            // コンプリート停止フラグ
+    private var enableTouch = false                 // タッチ有効フラグ
+    private var indexAnimationFlag = false
 
-    var atariButtonArray: [UIButton]!       // 当たりボタンの配列
-    var textViewArray: [UILabel]!           // アイテム名表示用ビューの配列
+    private var atariButtonArray: [UIButton]!       // 当たりボタンの配列
+    private var textViewArray: [UILabel]!           // アイテム名表示用ビューの配列
 
-    var bgmAudio: AVAudioPlayer!
-    var atariAudio: AVAudioPlayer!
-    var itemSEAudio: AVAudioPlayer!
-    var itemAudio: AVAudioPlayer!
-    var completeAudio: AVAudioPlayer!
-    var dokoAudio: AVAudioPlayer!
-    
-    func endAnimation() {
-    }
-    
+    private var bgmAudio: AVAudioPlayer!
+    private var atariAudio: AVAudioPlayer!
+    private var itemSEAudio: AVAudioPlayer!
+    private var itemAudio: AVAudioPlayer!
+    private var completeAudio: AVAudioPlayer!
+    private var dokoAudio: AVAudioPlayer!    
 
     override func viewDidLoad() {
         super.viewDidLoad()

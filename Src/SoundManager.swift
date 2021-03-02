@@ -11,10 +11,10 @@ import AVFoundation
 var soundManager: SoundManager!
 
 class SoundManager {
-    var playButtonSound: AVAudioPlayer!
-    var readButtonSound: AVAudioPlayer!
-    var openButtonSound: AVAudioPlayer!
-    var closeButtonSound: AVAudioPlayer!
+    private var playButtonSound: AVAudioPlayer!
+    private var readButtonSound: AVAudioPlayer!
+    private var openButtonSound: AVAudioPlayer!
+    private var closeButtonSound: AVAudioPlayer!
 
     // 初期化処理
     init()
