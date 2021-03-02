@@ -25,10 +25,9 @@ class IndexView: UIView {
     var openFlag: Bool = false
 
     var thumbnailViews: [ThumbnailView] = []
-    var endHideIndexMethod: Selector?
     var currentPage: Int = 0
     var animationFlag: Bool = false
-    var endAnimationSel: Selector?
+    var endAnimationCallback: (() -> Void)?
 
     override func awakeFromNib()
     {
@@ -112,15 +111,14 @@ class IndexView: UIView {
     }
 
     // インデックス消去処理
-    func closeIndex(animation: Bool, endMethod: Selector?)
+    func closeIndex(animation: Bool, endMethod: (() -> Void)?)
     {
         if animationFlag {
             return
         }
         
         openFlag = false
-        endHideIndexMethod = endMethod
-        endAnimationSel = endMethod
+        endAnimationCallback = endMethod
 
         let indexSize = frame.size
         if animation {
@@ -142,9 +140,7 @@ class IndexView: UIView {
     func endCloseIndex()
     {
         animationFlag = false
-        if indexViewDelegate != nil && endAnimationSel != nil {
-            indexViewDelegate?.perform(endAnimationSel)
-        }
+        endAnimationCallback?()
     }
 
     // ページに対応したサムネイルを取得
@@ -161,12 +157,12 @@ class IndexView: UIView {
         let indexSize = frame.size
         var offset = (page == -1) ? (SCREEN_WIDTH - (THUMBNAIL_WIDTH * CGFloat(PAGE_NUM) + THUMBNAIL_SPACE * CGFloat(PAGE_NUM - 1))) / 2 : THUMBNAIL_OFFSET
         for i in 0 ..< PAGE_NUM {
-            let thumbnail = thumbnailViews[i]
-            if thumbnail.page == page {
-                thumbnail.frame = CGRect(x: offset, y: indexSize.height - SELECTED_THUMBNAIL_HEIGHT - 10, width: SELECTED_THUMBNAIL_WIDTH, height: SELECTED_THUMBNAIL_HEIGHT)
+            let thumbnailView = thumbnailViews[i]
+            if thumbnailView.page == page {
+                thumbnailView.frame = CGRect(x: offset, y: indexSize.height - SELECTED_THUMBNAIL_HEIGHT - 10, width: SELECTED_THUMBNAIL_WIDTH, height: SELECTED_THUMBNAIL_HEIGHT)
                 offset += SELECTED_THUMBNAIL_WIDTH + THUMBNAIL_SPACE
             } else {
-                thumbnail.frame = CGRect(x: offset, y: indexSize.height - THUMBNAIL_HEIGHT - 10, width: THUMBNAIL_WIDTH, height: THUMBNAIL_HEIGHT)
+                thumbnailView.frame = CGRect(x: offset, y: indexSize.height - THUMBNAIL_HEIGHT - 10, width: THUMBNAIL_WIDTH, height: THUMBNAIL_HEIGHT)
                 offset += THUMBNAIL_WIDTH + THUMBNAIL_SPACE
             }
         }

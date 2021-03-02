@@ -575,18 +575,11 @@ class DataManager {
         if let data = UserDefaults.standard.value(forKey:"PlayFindItem") as? Data {
             playFindItem = try! PropertyListDecoder().decode([[PlayFindItem]].self, from: data) as [[PlayFindItem]]
         }
-/*
-        var data: NSData! = ud.object(forKey: "PlayFindItem") as? NSData
-        if data == nil {
-            initPlayFindData()
-        } else {
-            data.getBytes(playFindItem as UnsafeMurableRawPointer, length:1)
-        }
-*/
+
         // 初回は本体のロケール設定に合わせる
         if !dataExistFlag {
             let languages = NSLocale.preferredLanguages
-            lang = languages[0] == "ja" ? LANG_JPN : LANG_ENG
+            lang = languages[0].prefix(2) == "ja" ? LANG_JPN : LANG_ENG
         }
     }
 

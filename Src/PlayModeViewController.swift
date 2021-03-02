@@ -43,7 +43,8 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     var completeImageView: UIImageView!     // コンプリート文字ビュー
     var completeStopFlag = false            // コンプリート停止フラグ
     var enableTouch = false                 // タッチ有効フラグ
-    
+    var indexAnimationFlag = false
+
     var atariButtonArray: [UIButton]!       // 当たりボタンの配列
     var textViewArray: [UILabel]!           // アイテム名表示用ビューの配列
 
@@ -124,33 +125,38 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         indexView.frame = CGRect(x: 0, y: SCREEN_HEIGHT - rect.size.height, width: rect.size.width, height: rect.size.height)
         indexView.isUserInteractionEnabled = false
         indexView.isHidden = false
-        let thumbnail = indexView.getThumbnailView(page: currentPage)
-        maskView.frame = thumbnail.frame
+        maskView.frame = indexView.getThumbnailView(page: currentPage).frame
         maskView.alpha = 0.0
         indexView.addSubview(maskView)
+        
+        indexAnimationFlag = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // 現在ページのサムネイルを3回点滅
-        UIView.animate(withDuration: 0.2,
-                       delay: 0.5,
-                       options: [],
-                       animations: {
-                        UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true, animations: {
-                            self.maskView.alpha = 0.7
-                        })
-                       },
-                       completion: {_ in self.endContinueGuide()})
+        if indexAnimationFlag {
+            indexAnimationFlag = false
+            
+            // 現在ページのサムネイルを3回点滅
+            UIView.animate(withDuration: 0.2,
+                           delay: 0.5,
+                           options: [],
+                           animations: {
+                            UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true, animations: {
+                                self.maskView.alpha = 0.7
+                            })
+                           },
+                           completion: {_ in self.endContinueGuide()})
+        }
     }
 
     // インデックス消去
     func endContinueGuide()
     {
-        indexView.closeIndex(animation: true, endMethod: #selector(endContinueGuide2))
+        indexView.closeIndex(animation: true, endMethod: endContinueGuide2)
     }
 
     // マスクビュー消去
-    @objc func endContinueGuide2()
+    func endContinueGuide2()
     {
         maskView.removeFromSuperview()
         startPlayFirst()
@@ -249,14 +255,16 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　アイテム名読み上げ待ち
-    @objc func readItemName()
+    func readItemName()
     {
         // アイテム表示まで2秒待つ
-        perform(#selector(readItemName2), with:nil, afterDelay:2.0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.readItemName2()
+        }
     }
 
     //　アイテム名読み上げタイマーセット
-    @objc func readItemName2()
+    func readItemName2()
     {
         // アイテム名読み上げカウンタクリア
         itemCount = 0
@@ -463,7 +471,9 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             i += 1
         }
         if i == FIND_ITEM_NUM {
-            perform(#selector(playComplete), with: nil, afterDelay: 3.0)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                self.playComplete()
+            }
         }
     }
 
@@ -498,17 +508,19 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         bgView.addSubview(atariAnimation)
         atariAnimation.startAnimating()
         
-        perform(#selector(endAtariParticle(atariAnimation:)), with: atariAnimation, afterDelay: 3.0)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+            self.endAtariParticle(atariAnimation: atariAnimation)
+        }
     }
 
     // 当たりパーティクル再生終了
-    @objc func endAtariParticle(atariAnimation: UIImageView)
+    func endAtariParticle(atariAnimation: UIImageView)
     {
         atariAnimation.removeFromSuperview()
     }
 
     // コンプリート画面処理
-    @objc func playComplete()
+    func playComplete()
     {
         if completeStopFlag {
             return
@@ -545,14 +557,14 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
 
         completeCounter = 0
         for i in 0 ..< FIND_ITEM_NUM {
-            let point = CGPoint(x: 0, y: 0)
-            perform(#selector(playComplete3), with: nil, afterDelay: Double(i) * 0.3)
-            viewAtariParticle(point: point)
+            DispatchQueue.main.asyncAfter(deadline: .now() + (Double(i) * 0.3)) {
+                self.playComplete3()
+            }
         }
     }
 
     // コンプリート画面処理3
-    @objc func playComplete3()
+    func playComplete3()
     {
         if completeStopFlag {
             return
@@ -664,10 +676,10 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     {
         currentPage = page
 
-        indexView.closeIndex(animation: true, endMethod: #selector(endSelectPage))
+        indexView.closeIndex(animation: true, endMethod: endSelectPage)
     }
 
-    @objc func endSelectPage()
+    func endSelectPage()
     {
         UIView.animate(withDuration: 0.5,
                        animations: {self.view.alpha = 0.0},

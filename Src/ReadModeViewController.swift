@@ -54,6 +54,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     var bgImageViews = [UIImageView?](repeating: nil, count: PAGE_NUM)  // ページ毎の静止画ビュー配列
     var scrollFlag: Bool = false                // スクロール中フラグ
     var enableTouch: Bool = false               // タッチ有効フラグ
+    var indexAnimationFlag = false
 
     var bgmAudio: AVAudioPlayer!
     var readAudio: AVAudioPlayer!
@@ -127,33 +128,38 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         indexView.frame = CGRect(x: 0, y: SCREEN_HEIGHT - rect.size.height, width: rect.size.width, height: rect.size.height)
         indexView.isUserInteractionEnabled = false
         indexView.isHidden = false
-        let thumbnail = indexView.getThumbnailView(page: currentPage)
-        maskView.frame = thumbnail.frame
+        maskView.frame = indexView.getThumbnailView(page: currentPage).frame
         maskView.alpha = 0.0
         indexView.addSubview(maskView)
+        
+        indexAnimationFlag = true
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // 現在ページのサムネイルを3回点滅
-        UIView.animate(withDuration: 0.2,
-                       delay: 0.5,
-                       options: [],
-                       animations: {
-                        UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true, animations: {
-                            self.maskView.alpha = 0.7
-                        })
-                       },
-                       completion: {_ in self.endContinueGuide()})
+        if indexAnimationFlag {
+            indexAnimationFlag = false
+            
+            // 現在ページのサムネイルを3回点滅
+            UIView.animate(withDuration: 0.2,
+                           delay: 0.5,
+                           options: [],
+                           animations: {
+                            UIView.modifyAnimations(withRepeatCount: 3, autoreverses: true, animations: {
+                                self.maskView.alpha = 0.7
+                            })
+                           },
+                           completion: {_ in self.endContinueGuide()})
+        }
     }
 
     // インデックス消去
     func endContinueGuide()
     {
-        indexView.closeIndex(animation: true, endMethod: #selector(endContinueGuide2))
+        indexView.closeIndex(animation: true, endMethod: endContinueGuide2)
     }
 
     // マスクビュー消去
-    @objc func endContinueGuide2()
+    func endContinueGuide2()
     {
         maskView.removeFromSuperview()
 
@@ -516,12 +522,12 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
             view.isUserInteractionEnabled = false
             UIView.animate(withDuration: 0.5, animations: {self.view.alpha = 0.0}, completion: {_ in self.endReturnMenu()})
         } else {
-            perform(#selector(endReturnMenu), with: nil, afterDelay: 0.0)
+            endReturnMenu()
         }
     }
 
     // メインメニューに戻る
-    @objc func endReturnMenu()
+    func endReturnMenu()
     {
         indexView.indexViewDelegate = nil
         
@@ -544,11 +550,11 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         currentPage = page
      
         soundManager.playOpenSound()
-        indexView.closeIndex(animation: true, endMethod: #selector(endSelectPage))
+        indexView.closeIndex(animation: true, endMethod: endSelectPage)
     }
 
     // ページ選択後よむモード開始
-    @objc func endSelectPage()
+    func endSelectPage()
     {
         UIView.animate(withDuration: 0.5,
                        animations: {self.view.alpha = 0.0},

@@ -43,28 +43,28 @@ class SoundManager {
     func playPlaySound()
     {
         playButtonSound.currentTime = 0
-        playButtonSound!.play()
+        playButtonSound.play()
     }
 
     // よむモードボタンの音を再生
     func playReadSound()
     {
-        readButtonSound!.currentTime = 0
-        readButtonSound!.play()
+        readButtonSound.currentTime = 0
+        readButtonSound.play()
     }
 
     // 開くアクションの音を再生
     func playOpenSound()
     {
-        openButtonSound!.currentTime = 0
-        openButtonSound!.play()
+        openButtonSound.currentTime = 0
+        openButtonSound.play()
     }
 
     // 閉じるアクションの音を再生
     func playCloseSound()
     {
-        closeButtonSound!.currentTime = 0
-        closeButtonSound!.play()
+        closeButtonSound.currentTime = 0
+        closeButtonSound.play()
     }
 
 }

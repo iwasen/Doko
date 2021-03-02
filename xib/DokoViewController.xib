@@ -14,7 +14,6 @@
                 <outlet property="eigoButton" destination="82" id="100"/>
                 <outlet property="howtoButton" destination="60" id="72"/>
                 <outlet property="howtoView" destination="76" id="77"/>
-                <outlet property="logoView" destination="53" id="54"/>
                 <outlet property="nihongoButton" destination="81" id="99"/>
                 <outlet property="optionButton" destination="61" id="73"/>
                 <outlet property="optionImageView" destination="79" id="107"/>
@@ -44,11 +43,6 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="25" y="52"/>
         </view>
-        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="kodansha_logo.png" id="53" userLabel="Logo View">
-            <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
-            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-            <point key="canvasLocation" x="21" y="-437"/>
-        </imageView>
         <view contentMode="scaleToFill" id="22" userLabel="Title Base View">
             <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -368,6 +362,5 @@
         <image name="kddk1j_subberpopup_option_r_erase_menu_no___x798y425w128h49.png" width="128" height="49"/>
         <image name="kddk1j_subberpopup_option_r_erase_menu_yes___x673y425w124h49.png" width="124" height="49"/>
         <image name="kddk1j_subberpopup_option_r_japanese___x164y72w128h49.png" width="128" height="49"/>
-        <image name="kodansha_logo.png" width="1024" height="768"/>
     </resources>
 </document>

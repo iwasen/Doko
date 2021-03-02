@@ -9,7 +9,6 @@ import UIKit
 import AVKit
 
 class DokoViewController: UIViewController {
-    @IBOutlet var logoView: UIImageView!
     @IBOutlet var titleBaseView: UIView!
     @IBOutlet var titleImageView: UIImageView!
     @IBOutlet var submenuView: SubmenuView!
@@ -36,7 +35,7 @@ class DokoViewController: UIViewController {
 
     var openingMovieLayer: AVPlayerLayer!
     var bgAudio: AVAudioPlayer!
-    var inOpeningMovie: Bool = false        // ÉIÅ[ÉvÉjÉìÉOÉÄÅ[ÉrÅ[çƒê∂íÜÉtÉâÉO
+    var inOpeningMovie: Bool = false
     var openingSkipFlag: Bool = false
 
     override func viewDidLoad() {
@@ -80,29 +79,15 @@ class DokoViewController: UIViewController {
 */
         // オープニングムービー再生
         let moviePath = Bundle.main.path(forResource: dataManager.lang == LANG_JPN ? "kddk1j_op" : "kddk1e_op", ofType: "mp4")!
-        let url = URL(fileURLWithPath: moviePath)
-        let openingMovie = AVPlayer(url: url)
+        let openingMovie = AVPlayer(url: URL(fileURLWithPath: moviePath))
         NotificationCenter.default.addObserver(self, selector: #selector(endOpeningMovie), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: openingMovie.currentItem)
         openingMovieLayer = AVPlayerLayer(player: openingMovie)
         openingMovieLayer.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
-  //      view.isUserInteractionEnabled = false
         view.layer.addSublayer(openingMovieLayer)
         openingMovie.play()
 
         // オープニングムービー再生中フラグセット
         inOpeningMovie = true
-    }
-
-    // スリープ解除
-    func wakeup()
-    {
-        if inOpeningMovie {
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: openingMovieLayer.player?.currentItem)
-            openingMovieLayer.player?.pause()
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(endOpeningMovie), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: openingMovieLayer.player?.currentItem)
-            openingMovieLayer.player?.play()
-        }
     }
 
     // オープニングムービー終了
@@ -323,7 +308,9 @@ class DokoViewController: UIViewController {
     @IBAction func touchUpPlayButton(_ sender: AnyObject)
     {
         // タイトル画面をフェードアウト
-        UIView.animate(withDuration: 1.0, animations: {self.view.alpha = 0.0}, completion: {_ in self.gotoPlayMode()})
+        UIView.animate(withDuration: 1.0,
+                       animations: {self.view.alpha = 0.0},
+                       completion: {_ in self.gotoPlayMode()})
     }
 
     // あそぶモード開始
@@ -484,9 +471,10 @@ class DokoViewController: UIViewController {
     @IBAction func websiteButton(_ sender: AnyObject)
     {
         dataManager.saveData()
-        
+/*
         let url = URL(string: dataManager.lang == LANG_JPN ? "http://www.bookclub.kodansha.co.jp/books/topics/doko/index.html" : "http://children.kodansha.co.jp/en/index.html")
-        
+*/
+        let url = URL(string: "https://bookclub.kodansha.co.jp/product?item=0000182460")
         if UIApplication.shared.canOpenURL(url!) {
             UIApplication.shared.open(url!)
         }
