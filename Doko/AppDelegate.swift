@@ -14,8 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        dataManager = DataManager()
-        soundManager = SoundManager();
+        DataManager.initialize()
+        SoundManager.initialize()
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationWillTerminate(_ application: UIApplication) {
-        dataManager.saveData()
+        DataManager.saveData()
     }
 }
 

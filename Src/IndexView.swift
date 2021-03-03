@@ -21,7 +21,8 @@ private let SELECTED_THUMBNAIL_HEIGHT: CGFloat = 75
 private let THUMBNAIL_SPACE: CGFloat = 10
 private let THUMBNAIL_OFFSET: CGFloat = 80
 
-class IndexView: UIView {
+class IndexView: UIView
+{
     var indexViewDelegate: IndexViewDelegete?
     var openFlag: Bool = false
 

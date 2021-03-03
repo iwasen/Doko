@@ -8,16 +8,17 @@
 import UIKit
 import AVFoundation
 
-let sounfEffectFile: [String] = [
-    "doko_word01in",
-    "doko_word02in",
-    "doko_word03in",
-    "doko_word04in",
-    "doko_word05in",
-    "doko_word06in"
-]
+class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewDelegete
+{
+    private static let sounfEffectFile: [String] = [
+        "doko_word01in",
+        "doko_word02in",
+        "doko_word03in",
+        "doko_word04in",
+        "doko_word05in",
+        "doko_word06in"
+    ]
 
-class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewDelegete {
     @IBOutlet var guideView: UIView!                   // 操作ガイドビュー
     @IBOutlet var guideImageView: UIImageView!         // 操作ガイドイメージビュー
     @IBOutlet var startButton: UIButton!               // スタートボタン
@@ -59,7 +60,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         super.viewDidLoad()
         
         // 現在ページを取得
-        currentPage = dataManager.playCurrentPage
+        currentPage = DataManager.playCurrentPage
 
         // 配列を初期化
         atariButtonArray = []
@@ -79,9 +80,9 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         bgMovie = AVPlayer()
 
         // 初回は操作ガイド表示
-        if !dataManager.playContinueFlag {
+        if !DataManager.playContinueFlag {
             displayGuide()
-            dataManager.playContinueFlag = true
+            DataManager.playContinueFlag = true
         } else {
             continueGuide()
         }
@@ -90,9 +91,9 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     // 操作ガイド表示
     func displayGuide()
     {
-        guideImageView.image = dataManager.getImage(jpnFileName: "kddk1j_guide_asob", engFileName: "kddk1e_guide_asobu")
-        startButton.setImage(dataManager.getImage(jpnFileName: "kddk1j_btn_guide_n___x423y666w172h35", engFileName: "kddk1e_btn_guide_n___x423y666w172h35"), for: UIControl.State.normal)
-        startButton.setImage(dataManager.getImage(jpnFileName: "kddk1j_btn_guide_r___x423y666w172h35", engFileName: "kddk1e_btn_guide_r___x423y666w172h35"), for: UIControl.State.highlighted)
+        guideImageView.image = DataManager.getImage(jpnFileName: "kddk1j_guide_asob", engFileName: "kddk1e_guide_asobu")
+        startButton.setImage(DataManager.getImage(jpnFileName: "kddk1j_btn_guide_n___x423y666w172h35", engFileName: "kddk1e_btn_guide_n___x423y666w172h35"), for: UIControl.State.normal)
+        startButton.setImage(DataManager.getImage(jpnFileName: "kddk1j_btn_guide_r___x423y666w172h35", engFileName: "kddk1e_btn_guide_r___x423y666w172h35"), for: UIControl.State.highlighted)
         view.addSubview(guideView)
     }
 
@@ -175,7 +176,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     func startPlayMode()
     {
         // 現在ページ保存
-        dataManager.playCurrentPage = currentPage
+        DataManager.playCurrentPage = currentPage
         
         readStopFlag = false
 
@@ -235,13 +236,13 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     func setupBgView()
     {
         // BGM再生
-        bgmAudio = soundManager.initializeSound(soundFile: dataManager.getBgSoundFile(page: currentPage))
+        bgmAudio = SoundManager.initializeSound(soundFile: DataManager.getBgSoundFile(page: currentPage))
         bgmAudio.numberOfLoops = -1
         bgmAudio.volume = 1.0
         bgmAudio.play()
         
         // 背景動画再生
-        let moviePath = Bundle.main.path(forResource: dataManager.getBgMovieFile(page: currentPage), ofType: "mp4")!
+        let moviePath = Bundle.main.path(forResource: DataManager.getBgMovieFile(page: currentPage), ofType: "mp4")!
         let bgItem = AVPlayerItem(url: URL(fileURLWithPath: moviePath))
         bgMovie.replaceCurrentItem(with: bgItem)
         bgMovieLayer = AVPlayerLayer(player: bgMovie)
@@ -293,14 +294,14 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             readTextTimer = nil
             
             // 「どこ」読み上げ
-            dokoAudio = soundManager.initializeSound(soundFile: dataManager.lang == LANG_JPN ? "kddk1j_re_doko" : "kddk1e_re_doko")
+            dokoAudio = SoundManager.initializeSound(soundFile: DataManager.lang == LANG_JPN ? "kddk1j_re_doko" : "kddk1e_re_doko")
             dokoAudio.play()
 
             // 当たり済みのアイテムを消す
             UIView.animate(withDuration: 0.5,
                            animations: {
                             for i in 0 ..< FIND_ITEM_NUM {
-                                if dataManager.playFindItem[self.currentPage][i].findFlag {
+                                if DataManager.playFindItem[self.currentPage][i].findFlag {
                                     self.textViewArray[i].alpha = 0.0
                                 }
                             }
@@ -320,11 +321,11 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             return
         }
         
-        itemAudio = soundManager.initializeSound(soundFile: dataManager.getPlaySoundFile(page: currentPage, index: dataManager.playFindItem[currentPage][itemCount].itemIndex))
+        itemAudio = SoundManager.initializeSound(soundFile: DataManager.getPlaySoundFile(page: currentPage, index: DataManager.playFindItem[currentPage][itemCount].itemIndex))
         itemAudio.numberOfLoops = 0
         itemAudio.volume = 1.0
         
-        itemSEAudio = soundManager.initializeSound(soundFile: sounfEffectFile[itemCount])
+        itemSEAudio = SoundManager.initializeSound(soundFile: PlayModeViewController.sounfEffectFile[itemCount])
         itemSEAudio.numberOfLoops = 0
         itemSEAudio.volume = 1.0
         
@@ -339,7 +340,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     func setItemButton()
     {
         for i in 0 ..< FIND_ITEM_NUM {
-            if !dataManager.playFindItem[currentPage][i].findFlag {
+            if !DataManager.playFindItem[currentPage][i].findFlag {
                 atariButtonArray[i].isHidden = false
             }
         }
@@ -354,13 +355,13 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         // 全部回答済みなら再度選択
         i = 0
         while i < FIND_ITEM_NUM {
-            if !dataManager.playFindItem[currentPage][i].findFlag {
+            if !DataManager.playFindItem[currentPage][i].findFlag {
                 break
             }
             i += 1
         }
         if i == FIND_ITEM_NUM {
-            dataManager.initPlayFindPage(page: currentPage)
+            DataManager.initPlayFindPage(page: currentPage)
         }
         
         var font: UIFont?
@@ -375,7 +376,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             totalTextWidth = 0
             for i in 0 ..< FIND_ITEM_NUM {
                 let bounds = CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
-                let str = NSString(string: dataManager.getPlayItemName(page: currentPage, index: dataManager.playFindItem[currentPage][i].itemIndex))
+                let str = NSString(string: DataManager.getPlayItemName(page: currentPage, index: DataManager.playFindItem[currentPage][i].itemIndex))
                 textSize[i] = str.boundingRect(with: bounds, options: [.usesLineFragmentOrigin, .usesFontLeading], attributes: [NSAttributedString.Key.font: font!], context: nil).size
 
                 totalTextWidth += textSize[i].width
@@ -398,7 +399,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         for i in 0 ..< FIND_ITEM_NUM {
             // 当たりボタン生成
             let atariButton = UIButton(type: UIButton.ButtonType.roundedRect)
-            atariButton.frame = dataManager.getPlayAtariRect(page: currentPage, index: dataManager.playFindItem[currentPage][i].itemIndex)
+            atariButton.frame = DataManager.getPlayAtariRect(page: currentPage, index: DataManager.playFindItem[currentPage][i].itemIndex)
             atariButton.addTarget(self, action:#selector(clickItem), for: UIControl.Event.touchUpInside)
             atariButton.isHidden = true
             atariView.addSubview(atariButton)
@@ -408,7 +409,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             let rect = CGRect(x: x, y: 20, width: textSize[i].width, height: textSize[i].height)
             let textView = UILabel(frame: rect)
             textView.font = font
-            textView.text = dataManager.getPlayItemName(page: currentPage, index: dataManager.playFindItem[currentPage][i].itemIndex)
+            textView.text = DataManager.getPlayItemName(page: currentPage, index: DataManager.playFindItem[currentPage][i].itemIndex)
             textView.alpha = 0.0
             textView.textColor = UIColor(ciColor: .white)
             textView.backgroundColor = UIColor(ciColor: .clear)
@@ -435,22 +436,22 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             return
         }
         
-        dataManager.playFindItem[currentPage][i].findFlag = true
+        DataManager.playFindItem[currentPage][i].findFlag = true
         
         atariButtonArray[i].isHidden = true
 
         // 当たりパーティクル再生
-        let rect = dataManager.getPlayAtariRect(page: currentPage, index: dataManager.playFindItem[currentPage][i].itemIndex)
+        let rect = DataManager.getPlayAtariRect(page: currentPage, index: DataManager.playFindItem[currentPage][i].itemIndex)
         viewAtariParticle(point: CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2))
 
         // 当たり効果音再生
-        atariAudio = soundManager.initializeSound(soundFile: "doko_word_ok")
+        atariAudio = SoundManager.initializeSound(soundFile: "doko_word_ok")
         atariAudio.numberOfLoops = 0
         atariAudio.volume = 1.0
         atariAudio.play()
 
         // 当たりアイテム名再生
-        itemAudio = soundManager.initializeSound(soundFile: dataManager.getPlaySoundFile(page: currentPage, index: dataManager.playFindItem[currentPage][i].itemIndex))
+        itemAudio = SoundManager.initializeSound(soundFile: DataManager.getPlaySoundFile(page: currentPage, index: DataManager.playFindItem[currentPage][i].itemIndex))
         itemAudio.numberOfLoops = 0
         itemAudio.volume = 1.0
         itemAudio.play()
@@ -461,7 +462,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         // コンプリートチェック
         i = 0
         while i < FIND_ITEM_NUM {
-            if !dataManager.playFindItem[currentPage][i].findFlag {
+            if !DataManager.playFindItem[currentPage][i].findFlag {
                 break
             }
             i += 1
@@ -522,7 +523,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             return
         }
         
-        if dataManager.lang == LANG_JPN {
+        if DataManager.lang == LANG_JPN {
             completeImageView = completeJpnImageView
             completeImageView.frame = CGRect(x: 244, y: 351, width: completeImageView.frame.size.width, height: completeImageView.frame.size.height)
         } else {
@@ -546,7 +547,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         bgmAudio.stop()
         
         // コンプリート音
-        completeAudio = soundManager.initializeSound(soundFile: "kddk1a_comp")
+        completeAudio = SoundManager.initializeSound(soundFile: "kddk1a_comp")
         completeAudio.play()
 
         UIView.animate(withDuration: 1.5, delay: 4.0, options: [], animations: {self.completeImageView.alpha = 0.0}, completion: {_ in self.playComplete4()})
@@ -566,7 +567,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             return
         }
         
-        let rect = dataManager.getPlayAtariRect(page: currentPage, index: dataManager.playFindItem[currentPage][completeCounter].itemIndex)
+        let rect = DataManager.getPlayAtariRect(page: currentPage, index: DataManager.playFindItem[currentPage][completeCounter].itemIndex)
         completeCounter += 1
         let point = CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2)
         viewAtariParticle(point: point)
@@ -593,7 +594,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         
         currentPage += 1
         if currentPage == PAGE_NUM {
-            dataManager.playCurrentPage = 0
+            DataManager.playCurrentPage = 0
             returnMenu()
         } else {
             stopPlayMode()
@@ -618,7 +619,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         stopPlayMode()
         
         // 現在の状態を保存
-        dataManager.saveData()
+        DataManager.saveData()
         
         // 親コントローラに通知
         (presentingViewController as! DokoViewController).playMenuBgSound()
@@ -638,7 +639,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         switch (touch.tapCount) {
         case 1:
             if indexView.openFlag {
-                soundManager.playCloseSound()
+                SoundManager.playCloseSound()
                 indexView.closeIndex(animation: true, endMethod: nil)
             }
             break
@@ -659,10 +660,10 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     @IBAction func indexButton(_ sender: AnyObject)
     {
         if indexView.openFlag {
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             indexView.closeIndex(animation: true, endMethod: nil)
         } else {
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
             indexView.openIndex(page: currentPage, animation: true)
         }
     }
@@ -689,7 +690,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     @IBAction func endButton(_ sender: AnyObject)
     {
         // 閉じる音
-        soundManager.playCloseSound()
+        SoundManager.playCloseSound()
 
         returnMenu()
     }

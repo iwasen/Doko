@@ -13,21 +13,19 @@ private let TEXT2_HEIGHT:CGFloat = 720
 private let PAGE_SPACE:CGFloat = 30
 private let ZOOM_SPEED = 10.0
 
-struct SentenceData {
-    var sentence: String!
-    var soundFile: String!
-    var viewIndex: Int!
-    var lineIndex: Int!
-    var viewSize: CGSize!
-}
+class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollViewDelegate, IndexViewDelegete
+{
+    struct SentenceData {
+        var sentence: String!
+        var soundFile: String!
+        var viewIndex: Int!
+        var lineIndex: Int!
+        var viewSize: CGSize!
+    }
 
-struct ReadData {
-    var textLabel: UILabel!
-    var soundFile: String!
-}
-
-class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollViewDelegate, IndexViewDelegete {
-    func endAnimation() {
+    struct ReadData {
+        var textLabel: UILabel!
+        var soundFile: String!
     }
     
     @IBOutlet var guideView: UIView!
@@ -59,11 +57,12 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     private var bgmAudio: AVAudioPlayer!
     private var readAudio: AVAudioPlayer!
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         // 現在ページ取得
-        currentPage = dataManager.readCurrentPage
+        currentPage = DataManager.readCurrentPage
 
         // フォント作成
         textFont = UIFont(name: "HiraKakuProN-W6", size: 20)!
@@ -86,9 +85,9 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         indexView.closeIndex(animation: false, endMethod: nil)
 
         // 初回は操作ガイド表示
-        if !dataManager.readContinueFlag {
+        if !DataManager.readContinueFlag {
             displayGuide()
-            dataManager.readContinueFlag = true
+            DataManager.readContinueFlag = true
         } else {
             continueGuide()
         }
@@ -97,9 +96,9 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     // 操作ガイド表示
     func displayGuide()
     {
-        guideImageView.image = dataManager.getImage(jpnFileName: "kddk1j_guide_yomu", engFileName: "kddk1e_guide_yomu")
-        startButton.setImage(dataManager.getImage(jpnFileName: "kddk1j_btn_guide_n___x423y666w172h35", engFileName: "kddk1e_btn_guide_n___x423y666w172h35"), for: UIControl.State.normal)
-        startButton.setImage(dataManager.getImage(jpnFileName: "kddk1j_btn_guide_r___x423y666w172h35", engFileName: "kddk1e_btn_guide_r___x423y666w172h35"), for: UIControl.State.highlighted)
+        guideImageView.image = DataManager.getImage(jpnFileName: "kddk1j_guide_yomu", engFileName: "kddk1e_guide_yomu")
+        startButton.setImage(DataManager.getImage(jpnFileName: "kddk1j_btn_guide_n___x423y666w172h35", engFileName: "kddk1e_btn_guide_n___x423y666w172h35"), for: UIControl.State.normal)
+        startButton.setImage(DataManager.getImage(jpnFileName: "kddk1j_btn_guide_r___x423y666w172h35", engFileName: "kddk1e_btn_guide_r___x423y666w172h35"), for: UIControl.State.highlighted)
         view.addSubview(guideView)
     }
 
@@ -135,7 +134,8 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         indexAnimationFlag = true
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool)
+    {
         if indexAnimationFlag {
             indexAnimationFlag = false
             
@@ -193,7 +193,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         }
 
         // 1ページ目の前にタイトル画面を入れる
-        let image = dataManager.getImage(jpnFileName: "kddk1j_op", engFileName: "kddk1e_op")
+        let image = DataManager.getImage(jpnFileName: "kddk1j_op", engFileName: "kddk1e_op")
         imageView = UIImageView(image: image)
         imageView.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
         scrollView.addSubview(imageView)
@@ -212,13 +212,13 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         scrollView.setContentOffset(CGPoint(x: (currentPage + 1) * Int((SCREEN_WIDTH + PAGE_SPACE)), y: 0), animated: false)
 
         // 現在ページ保存
-        dataManager.readCurrentPage = currentPage
+        DataManager.readCurrentPage = currentPage
         
         // BGムービー再生
         startBgMovie(fadeIn: !fadeIn)
 
         // BGM再生
-        bgmAudio = soundManager.initializeSound(soundFile: dataManager.getBgSoundFile(page: currentPage))
+        bgmAudio = SoundManager.initializeSound(soundFile: DataManager.getBgSoundFile(page: currentPage))
         bgmAudio.numberOfLoops = -1
         bgmAudio.volume = 1.0
         bgmAudio.play()
@@ -252,11 +252,11 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         setBgImage(page: currentPage + 2)
         
         // BGムービー設定
-        let path = Bundle.main.path(forResource: dataManager.getBgMovieFile(page: currentPage), ofType: "mp4")!
+        let path = Bundle.main.path(forResource: DataManager.getBgMovieFile(page: currentPage), ofType: "mp4")!
         bgMovie = AVPlayer(url: URL(fileURLWithPath: path))
         bgMovieLayer = AVPlayerLayer(player: bgMovie)
-        let zoomPoint = dataManager.getReadZoomPoint(page: currentPage)
-        let zoomRatio = dataManager.getReadZoomRatio(page: currentPage)
+        let zoomPoint = DataManager.getReadZoomPoint(page: currentPage)
+        let zoomRatio = DataManager.getReadZoomRatio(page: currentPage)
         bgMovieLayer.frame = CGRect(x: (SCREEN_WIDTH / 2 - zoomPoint.x) * CGFloat(zoomRatio), y: (SCREEN_HEIGHT / 2 - zoomPoint.y) * CGFloat(zoomRatio), width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
         bgMovieLayer.transform = CATransform3DScale(bgMovieLayer.transform, zoomRatio, zoomRatio, 1)
         bgImageViews[currentPage]?.alpha = fadeIn ? 1.0 : 0.0
@@ -297,10 +297,10 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         }
         
         if bgImageViews[page] == nil {
-            let path = Bundle.main.path(forResource: dataManager.getBgImageFile(page: page), ofType: "png")!
+            let path = Bundle.main.path(forResource: DataManager.getBgImageFile(page: page), ofType: "png")!
             let imageView = UIImageView(image: UIImage(contentsOfFile: path))
-            let zoomPoint = dataManager.getReadZoomPoint(page: page)
-            let zoomRatio = dataManager.getReadZoomRatio(page: page)
+            let zoomPoint = DataManager.getReadZoomPoint(page: page)
+            let zoomRatio = DataManager.getReadZoomRatio(page: page)
             imageView.frame = CGRect(x: SCREEN_WIDTH / 2 - zoomPoint.x * zoomRatio, y: SCREEN_HEIGHT / 2 - zoomPoint.y * zoomRatio, width: SCREEN_WIDTH * zoomRatio, height: SCREEN_HEIGHT * zoomRatio)
             bgViews[page]!.addSubview(imageView)
             bgImageViews[page] = imageView
@@ -329,7 +329,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     // テキストファイル読み込み
     func readTextData()
     {
-        let path = Bundle.main.path(forResource: dataManager.getReadTextFile(page: currentPage), ofType: "txt")
+        let path = Bundle.main.path(forResource: DataManager.getReadTextFile(page: currentPage), ofType: "txt")
         let text: String
         do {
             text = try String(contentsOfFile: path!, encoding: String.Encoding.shiftJIS)
@@ -346,12 +346,12 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
             let lineText2 = lineText.trimmingCharacters(in: NSCharacterSet.whitespaces)
             if lineText2.count != 0 {
                 var sentenceIndex = 0
-                let sentences = lineText2.components(separatedBy: dataManager.lang == LANG_JPN ? "," : "@")
+                let sentences = lineText2.components(separatedBy: DataManager.lang == LANG_JPN ? "," : "@")
                 for sentence in sentences {
                     if sentence.count != 0 {
                         var sentenceData = SentenceData()
                         sentenceData.sentence = sentence
-                        sentenceData.soundFile = dataManager.getReadSentenceSoundFile(page: currentPage, viewIndex: viewIndex, lineIndex: lineIndex, sentenceIndex: sentenceIndex)
+                        sentenceData.soundFile = DataManager.getReadSentenceSoundFile(page: currentPage, viewIndex: viewIndex, lineIndex: lineIndex, sentenceIndex: sentenceIndex)
                         sentenceData.viewIndex = viewIndex
                         sentenceData.lineIndex = lineIndex
                         let bounds = CGSize(width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
@@ -448,7 +448,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         readData.textLabel.textColor = UIColor(red: 1.0, green: 0.6, blue: 0.7, alpha: 1.0)
         
         // 音声再生
-        readAudio = soundManager.initializeSound(soundFile: readData.soundFile)
+        readAudio = SoundManager.initializeSound(soundFile: readData.soundFile)
         readAudio.delegate = self
         readAudio.play()
         
@@ -481,7 +481,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         // スクロール中でなければ効果音再生
         if !scrollFlag {
             scrollFlag = true
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
         }
 
         // スクロールが終わったらそのページを開始
@@ -535,7 +535,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         stopReadMode()
         
         // 現在の状態を保存
-        dataManager.saveData()
+        DataManager.saveData()
         
         // 親コントローラに通知
         (presentingViewController as! DokoViewController).playMenuBgSound()
@@ -549,7 +549,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     {
         currentPage = page
      
-        soundManager.playOpenSound()
+        SoundManager.playOpenSound()
         indexView.closeIndex(animation: true, endMethod: endSelectPage)
     }
 
@@ -569,11 +569,11 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     {
         if indexView.openFlag {
             // インデックスが開いているなら閉じる
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             indexView.closeIndex(animation: true, endMethod: nil)
         } else {
             // インデックスが閉じているなら開く
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
             indexView.openIndex(page: currentPage, animation: true)
         }
     }
@@ -582,7 +582,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     @IBAction func endButton(_ sender: AnyObject)
     {
         // 閉じる音
-        soundManager.playCloseSound()
+        SoundManager.playCloseSound()
         
         returnMenu(fadeout: true)
     }
@@ -598,7 +598,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         if touch.tapCount == 1 {
             // インデックス表示中なら閉じる
             if indexView.openFlag {
-                soundManager.playCloseSound()
+                SoundManager.playCloseSound()
                 indexView.closeIndex(animation: true, endMethod: nil)
             }
         }

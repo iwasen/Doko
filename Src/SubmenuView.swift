@@ -7,7 +7,8 @@
 
 import UIKit
 
-class SubmenuView: UIView {
+class SubmenuView: UIView
+{
     var openFlag: Bool = false
     
     // サブメニューを表示

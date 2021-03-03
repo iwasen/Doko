@@ -8,7 +8,8 @@
 import UIKit
 import AVKit
 
-class DokoViewController: UIViewController {
+class DokoViewController: UIViewController
+{
     @IBOutlet var titleBaseView: UIView!
     @IBOutlet var titleImageView: UIImageView!
     @IBOutlet var submenuView: SubmenuView!
@@ -38,7 +39,8 @@ class DokoViewController: UIViewController {
     private var inOpeningMovie: Bool = false
     private var openingSkipFlag: Bool = false
 
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
 
         setLanguage()
@@ -78,7 +80,7 @@ class DokoViewController: UIViewController {
         logoView.removeFromSuperview()
 */
         // オープニングムービー再生
-        let moviePath = Bundle.main.path(forResource: dataManager.lang == LANG_JPN ? "kddk1j_op" : "kddk1e_op", ofType: "mp4")!
+        let moviePath = Bundle.main.path(forResource: DataManager.lang == LANG_JPN ? "kddk1j_op" : "kddk1e_op", ofType: "mp4")!
         let openingMovie = AVPlayer(url: URL(fileURLWithPath: moviePath))
         NotificationCenter.default.addObserver(self, selector: #selector(endOpeningMovie), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: openingMovie.currentItem)
         openingMovieLayer = AVPlayerLayer(player: openingMovie)
@@ -133,7 +135,7 @@ class DokoViewController: UIViewController {
         } else if optionButton.isSelected {
             closeOptionView()
         } else if submenuView.openFlag {
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             submenuView.closeSubmenu(animation: true)
         }
     }
@@ -141,116 +143,116 @@ class DokoViewController: UIViewController {
     // 言語設定
     func setLanguage()
     {
-        titleImageView.image = dataManager.getImage(
+        titleImageView.image = DataManager.getImage(
             jpnFileName: "kddk1j_op",
             engFileName: "kddk1e_op")
         playModeButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_btn_asob___x100y340w376h229",
                 engFileName: "kddk1e_btn_asob___x100y340w376h229"),
             for: UIControl.State.normal)
         playModeButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_btn_asob_r___x100y340w376h229",
                 engFileName: "kddk1e_btn_asob_r___x100y340w376h229"),
             for:UIControl.State.highlighted)
         readModeButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_btn_yomu___x532y340w376h229",
                 engFileName: "kddk1e_btn_yomu___x100y340w376h229"),
             for:UIControl.State.normal)
         readModeButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_btn_yomu_r___x100y340w376h229",
                 engFileName: "kddk1e_btn_yomu_r___x100y340w376h229"),
             for:UIControl.State.highlighted)
         aboutButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_about_n___x62y706w240h52",
                 engFileName: "kddk1e_subber_btn_about_n___x62y706w240h52"),
             for:UIControl.State.normal)
         aboutButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_about_r___x62y706w240h52",
                 engFileName: "kddk1e_subber_btn_about_r___x62y706w240h52"),
             for:UIControl.State.highlighted)
         aboutButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_about_c___x62y706w240h52",
                 engFileName: "kddk1e_subber_btn_about_c___x62y706w240h52"),
             for:UIControl.State.selected)
         howtoButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_howto_n___x410y704w200h62",
                 engFileName: "kddk1e_subber_btn_howto_n___x410y704w200h62"),
             for:UIControl.State.normal)
         howtoButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_howto_r___x410y704w200h62",
                 engFileName: "kddk1e_subber_btn_howto_r___x410y704w200h62"),
             for:UIControl.State.highlighted)
         howtoButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_howto_c___x410y704w200h62",
                 engFileName: "kddk1e_subber_btn_howto_c___x410y704w200h62"),
             for:UIControl.State.selected)
         optionButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_option_n___x790y706w134h56",
                 engFileName: "kddk1e_subber_btn_option_n___x790y706w134h56"),
             for:UIControl.State.normal)
         optionButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_option_r___x790y706w134h56",
                 engFileName: "kddk1c_subber_btn_option_r___x790y706w134h56"),
             for:UIControl.State.highlighted)
         optionButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subber_btn_option_c___x790y706w134h56",
                 engFileName: "kddk1c_subber_btn_option_c___x790y706w134h56"),
             for:UIControl.State.selected)
-        aboutImageView.image = dataManager.getImage(
+        aboutImageView.image = DataManager.getImage(
             jpnFileName: "kddk1j_subberpopup_about___x62y18w909h683",
             engFileName: "kddk1e_subberpopup_about___x62y18w909h683")
-        howtoView.image = dataManager.getImage(
+        howtoView.image = DataManager.getImage(
             jpnFileName: "kddk1j_subberpopup_howto___x62y80w901h622",
             engFileName: "kddk1e_subberpopup_howto___x62y80w901h622")
-        optionImageView.image = dataManager.getImage(
+        optionImageView.image = DataManager.getImage(
             jpnFileName: "kddk1j_subberpopup_option___x510y158",
             engFileName: "kddk1e_subberpopup_option___x510y158")
         nihongoButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subberpopup_option_r_japanese___x164y72w128h49",
                 engFileName: "kddk1e_subberpopup_option_r_japanese___x164y72w128h49"),
             for:UIControl.State.selected)
         eigoButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subberpopup_option_r_english___x292y72w121h49",
                 engFileName: "kddk1e_subberpopup_option_r_english___x292y72w121h49"),
             for:UIControl.State.selected)
-        shokyoImageView.image = dataManager.getImage(
+        shokyoImageView.image = DataManager.getImage(
             jpnFileName: "kddk1j_subberpopup_option_r_erase_menu___x653y323w291h252",
             engFileName: "kddk1e_subberpopup_option_r_erase_menu___x653y323w291h252")
-        shokyoShimashitaView.image = dataManager.getImage(
+        shokyoShimashitaView.image = DataManager.getImage(
             jpnFileName: "kddk1j_subberpopup_option_r_erase_menu_deleted___x726y499w151h27",
             engFileName: "kddk1e_subberpopup_option_r_erase_menu_deleted___x726y499w151h27")
         shokyoSuruButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subberpopup_option_r_erase_menu_yes___x673y425w124h49",
                 engFileName: "kddk1e_subberpopup_option_r_erase_menu_yes___x673y425w124h49"),
             for:UIControl.State.selected)
         shokyoShinaiButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_subberpopup_option_r_erase_menu_no___x798y425w128h49",
                 engFileName: "kddk1e_subberpopup_option_r_erase_menu_no___x798y425w128h49"),
             for:UIControl.State.selected)
         websiteButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_btn_website_n___x737y569w187h28",
                 engFileName: "kddk1e_btn_website_n___x737y569w187h28"),
             for:UIControl.State.normal)
         websiteButton.setImage(
-            dataManager.getImage(
+            DataManager.getImage(
                 jpnFileName: "kddk1j_btn_website02_r___x737y569w187h28",
                 engFileName: "kddk1e_btn_website_r___x737y569w187h28"),
             for:UIControl.State.highlighted)
@@ -260,7 +262,7 @@ class DokoViewController: UIViewController {
     @IBAction func touchDownReadButton(_ sender: AnyObject)
     {
         // 効果音再生
-        soundManager.playReadSound()
+        SoundManager.playReadSound()
     }
 
     // よむモードボタンアップ
@@ -279,9 +281,9 @@ class DokoViewController: UIViewController {
         closeOptionView()
 
         // よむモードの画面へ遷移
-        let readMode = ReadModeViewController(nibName: "ReadModeViewController", bundle: Bundle.main)
-        readMode.modalPresentationStyle = .fullScreen
-        present(readMode,
+        let readModeViewController = ReadModeViewController(nibName: "ReadModeViewController", bundle: Bundle.main)
+        readModeViewController.modalPresentationStyle = .fullScreen
+        present(readModeViewController,
                 animated: false,
                 completion: {
                     // フェードアウトしたalpha値を戻しておく
@@ -301,7 +303,7 @@ class DokoViewController: UIViewController {
     @IBAction func touchDownPlayButton(_ sender: AnyObject)
     {
         // 効果音再生
-        soundManager.playPlaySound()
+        SoundManager.playPlaySound()
     }
 
     // あそぶモードボタンアップ
@@ -345,11 +347,11 @@ class DokoViewController: UIViewController {
     {
         if submenuView.openFlag {
             // オープン中ならクローズ
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             submenuView.closeSubmenu(animation: true)
         } else {
             // クローズ中ならオープン
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
             submenuView.openSubmenu(animation: true)
         }
     }
@@ -376,7 +378,7 @@ class DokoViewController: UIViewController {
     func openAboutView()
     {
         if !aboutButton.isSelected {
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
             closeHowtoView()
             closeOptionView()
             aboutView.frame = CGRect(x: 62, y: 18, width: aboutView.frame.size.width, height: aboutView.frame.size.height)
@@ -391,7 +393,7 @@ class DokoViewController: UIViewController {
     func closeAboutView()
     {
         if aboutButton.isSelected {
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             aboutView.removeFromSuperview()
             aboutButton.isSelected = false
             playModeButton.isEnabled = true
@@ -403,7 +405,7 @@ class DokoViewController: UIViewController {
     func openHowtoView()
     {
         if !howtoButton.isSelected {
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
             closeAboutView()
             closeOptionView()
             howtoView.frame = CGRect(x: 62, y: 80, width: howtoView.frame.size.width, height: howtoView.frame.size.height)
@@ -418,7 +420,7 @@ class DokoViewController: UIViewController {
     func closeHowtoView()
     {
         if howtoButton.isSelected {
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             howtoView.removeFromSuperview()
             howtoButton.isSelected = false
             playModeButton.isEnabled = true
@@ -430,11 +432,11 @@ class DokoViewController: UIViewController {
     func openOptionView()
     {
         if !optionButton.isSelected {
-            soundManager.playOpenSound()
+            SoundManager.playOpenSound()
             closeAboutView()
             closeHowtoView()
-            nihongoButton.isSelected = dataManager.lang == LANG_JPN
-            eigoButton.isSelected = dataManager.lang == LANG_ENG
+            nihongoButton.isSelected = DataManager.lang == LANG_JPN
+            eigoButton.isSelected = DataManager.lang == LANG_ENG
             shokyoButton.isSelected = false
             optionView.frame = CGRect(x: 510, y: 158, width: optionView.frame.size.width, height: optionView.frame.size.height)
             view.addSubview(optionView)
@@ -449,7 +451,7 @@ class DokoViewController: UIViewController {
     func closeOptionView()
     {
         if optionButton.isSelected {
-            soundManager.playCloseSound()
+            SoundManager.playCloseSound()
             optionView.removeFromSuperview()
             shokyoView.removeFromSuperview()
             optionButton.isSelected = false
@@ -462,7 +464,7 @@ class DokoViewController: UIViewController {
     func playMenuBgSound()
     {
         // BGM再生
-        bgAudio = soundManager.initializeSound(soundFile: "kddk1a_loop_menu")
+        bgAudio = SoundManager.initializeSound(soundFile: "kddk1a_loop_menu")
         bgAudio.numberOfLoops = -1
         bgAudio.play()
     }
@@ -470,9 +472,9 @@ class DokoViewController: UIViewController {
     // ウェブサイトへボタン
     @IBAction func websiteButton(_ sender: AnyObject)
     {
-        dataManager.saveData()
+        DataManager.saveData()
 /*
-        let url = URL(string: dataManager.lang == LANG_JPN ? "http://www.bookclub.kodansha.co.jp/books/topics/doko/index.html" : "http://children.kodansha.co.jp/en/index.html")
+        let url = URL(string: DataManager.lang == LANG_JPN ? "http://www.bookclub.kodansha.co.jp/books/topics/doko/index.html" : "http://children.kodansha.co.jp/en/index.html")
 */
         let url = URL(string: "https://bookclub.kodansha.co.jp/product?item=0000182460")
         if UIApplication.shared.canOpenURL(url!) {
@@ -485,10 +487,10 @@ class DokoViewController: UIViewController {
     {
         nihongoButton.isSelected = true
         eigoButton.isSelected = false
-        if dataManager.lang != LANG_JPN {
-            dataManager.lang = LANG_JPN
+        if DataManager.lang != LANG_JPN {
+            DataManager.lang = LANG_JPN
             setLanguage()
-            dataManager.clearData()
+            DataManager.clearData()
         }
     }
 
@@ -497,10 +499,10 @@ class DokoViewController: UIViewController {
     {
         nihongoButton.isSelected = false
         eigoButton.isSelected = true
-        if dataManager.lang != LANG_ENG {
-            dataManager.lang = LANG_ENG
+        if DataManager.lang != LANG_ENG {
+            DataManager.lang = LANG_ENG
             setLanguage()
-            dataManager.clearData()
+            DataManager.clearData()
         }
     }
 
@@ -521,7 +523,7 @@ class DokoViewController: UIViewController {
         shokyoSuruButton.isSelected = true
         shokyoShinaiButton.isSelected = false
 
-        dataManager.clearData()
+        DataManager.clearData()
         shokyoShimashitaView.isHidden = false
     }
 

@@ -8,16 +8,15 @@
 import UIKit
 import AVFoundation
 
-var soundManager: SoundManager!
-
-class SoundManager {
-    private var playButtonSound: AVAudioPlayer!
-    private var readButtonSound: AVAudioPlayer!
-    private var openButtonSound: AVAudioPlayer!
-    private var closeButtonSound: AVAudioPlayer!
+class SoundManager
+{
+    private static var playButtonSound: AVAudioPlayer!
+    private static var readButtonSound: AVAudioPlayer!
+    private static var openButtonSound: AVAudioPlayer!
+    private static var closeButtonSound: AVAudioPlayer!
 
     // 初期化処理
-    init()
+    class func initialize()
     {
         playButtonSound = initializeSound(soundFile: "kddk1a_btn_asob")
         readButtonSound = initializeSound(soundFile: "kddk1a_btn_yomu")
@@ -26,7 +25,7 @@ class SoundManager {
     }
 
     // サウンドファイル名からAVAudioPlayerを作成
-    func initializeSound(soundFile: String) -> AVAudioPlayer
+    class func initializeSound(soundFile: String) -> AVAudioPlayer
     {
         var audioPlayer: AVAudioPlayer?
         
@@ -40,28 +39,28 @@ class SoundManager {
     }
 
     // あそぶモードボタンの音を再生
-    func playPlaySound()
+    class func playPlaySound()
     {
         playButtonSound.currentTime = 0
         playButtonSound.play()
     }
 
     // よむモードボタンの音を再生
-    func playReadSound()
+    class func playReadSound()
     {
         readButtonSound.currentTime = 0
         readButtonSound.play()
     }
 
     // 開くアクションの音を再生
-    func playOpenSound()
+    class func playOpenSound()
     {
         openButtonSound.currentTime = 0
         openButtonSound.play()
     }
 
     // 閉じるアクションの音を再生
-    func playCloseSound()
+    class func playCloseSound()
     {
         closeButtonSound.currentTime = 0
         closeButtonSound.play()
