@@ -28,7 +28,7 @@ class SubmenuView: UIView
     }
 
     // サブメニュー表示完了
-    func endOpenSubmenu()
+    private func endOpenSubmenu()
     {
         let indexSize = frame.size
         UIView.animate(withDuration: 0.2, animations: {self.frame = CGRect(x: 0, y: SCREEN_HEIGHT - indexSize.height, width: indexSize.width, height: indexSize.height)})

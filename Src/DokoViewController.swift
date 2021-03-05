@@ -73,7 +73,7 @@ class DokoViewController: UIViewController
 
     }
     // オープニングムービー開始
-    func startOpeningMovie()
+    private func startOpeningMovie()
     {
 /*
         // ロゴを消去
@@ -93,7 +93,7 @@ class DokoViewController: UIViewController
     }
 
     // オープニングムービー終了
-    @objc func endOpeningMovie()
+    @objc private func endOpeningMovie()
     {
         // オープニングムービー再生中フラグリセット
         inOpeningMovie = false
@@ -141,7 +141,7 @@ class DokoViewController: UIViewController
     }
 
     // 言語設定
-    func setLanguage()
+    private func setLanguage()
     {
         titleImageView.image = DataManager.getImage(
             jpnFileName: "kddk1j_op",
@@ -273,7 +273,7 @@ class DokoViewController: UIViewController
     }
 
     // よむモード開始
-    func gotoReadMode()
+    private func gotoReadMode()
     {
         // サブメニューによる画面を閉じる
         closeAboutView()
@@ -316,7 +316,7 @@ class DokoViewController: UIViewController
     }
 
     // あそぶモード開始
-    func gotoPlayMode()
+    private func gotoPlayMode()
     {
         // サブメニューによる画面を閉じる
         closeAboutView()
@@ -375,7 +375,7 @@ class DokoViewController: UIViewController
     }
 
     // ほんについての画面を表示
-    func openAboutView()
+    private func openAboutView()
     {
         if !aboutButton.isSelected {
             SoundManager.playOpenSound()
@@ -390,7 +390,7 @@ class DokoViewController: UIViewController
     }
 
     // ほんについての画面を閉じる
-    func closeAboutView()
+    private func closeAboutView()
     {
         if aboutButton.isSelected {
             SoundManager.playCloseSound()
@@ -402,7 +402,7 @@ class DokoViewController: UIViewController
     }
 
     // あそびかたの画面を表示
-    func openHowtoView()
+    private func openHowtoView()
     {
         if !howtoButton.isSelected {
             SoundManager.playOpenSound()
@@ -417,7 +417,7 @@ class DokoViewController: UIViewController
     }
 
     // あそびかたの画面を閉じる
-    func closeHowtoView()
+    private func closeHowtoView()
     {
         if howtoButton.isSelected {
             SoundManager.playCloseSound()
@@ -429,7 +429,7 @@ class DokoViewController: UIViewController
     }
 
     // 設定画面を開く
-    func openOptionView()
+    private func openOptionView()
     {
         if !optionButton.isSelected {
             SoundManager.playOpenSound()
@@ -448,7 +448,7 @@ class DokoViewController: UIViewController
     }
 
     // 設定画面を閉じる
-    func closeOptionView()
+    private func closeOptionView()
     {
         if optionButton.isSelected {
             SoundManager.playCloseSound()
@@ -543,7 +543,7 @@ class DokoViewController: UIViewController
     }
 
     // サブメニューボタンアニメーション
-    func animationSubmenuButton()
+    private func animationSubmenuButton()
     {
         UIView.animate(withDuration: 1.5,
                        delay: 0,

@@ -95,7 +95,7 @@ class IndexView: UIView
     }
 
     // インデックス表示完了処理
-    func endOpenIndex()
+    private func endOpenIndex()
     {
         let indexSize = frame.size
         UIView.animate(withDuration: 0.2,
@@ -130,7 +130,7 @@ class IndexView: UIView
         }
     }
 
-    func endCloseIndex()
+    private func endCloseIndex()
     {
         animationFlag = false
         endAnimationCallback?()

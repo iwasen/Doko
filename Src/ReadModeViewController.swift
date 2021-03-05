@@ -94,7 +94,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // 操作ガイド表示
-    func displayGuide()
+    private func displayGuide()
     {
         guideImageView.image = DataManager.getImage(jpnFileName: "kddk1j_guide_yomu", engFileName: "kddk1e_guide_yomu")
         startButton.setImage(DataManager.getImage(jpnFileName: "kddk1j_btn_guide_n___x423y666w172h35", engFileName: "kddk1e_btn_guide_n___x423y666w172h35"), for: UIControl.State.normal)
@@ -117,7 +117,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // ２回目以降
-    func continueGuide()
+    private func continueGuide()
     {
         // インデックス表示
         indexView.openIndex(page: -1, animation: false)
@@ -153,13 +153,13 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // インデックス消去
-    func endContinueGuide()
+    private func endContinueGuide()
     {
         indexView.closeIndex(animation: true, endMethod: endContinueGuide2)
     }
 
     // マスクビュー消去
-    func endContinueGuide2()
+    private func endContinueGuide2()
     {
         maskView.removeFromSuperview()
 
@@ -167,7 +167,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // よむモードの開始
-    func startReadFirst()
+    private func startReadFirst()
     {
         endButton.isHidden = false
         indexButton.isHidden = false
@@ -180,7 +180,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // BGビュー作成
-    func createBgView()
+    private func createBgView()
     {
         var imageView: UIImageView
 
@@ -205,7 +205,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // 「よむモード」開始処理
-    func startReadMode(fadeIn: Bool)
+    private func startReadMode(fadeIn: Bool)
     {
         // ページ位置設定
         pageControlUsed = true
@@ -234,7 +234,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // 「よむモード」停止処理
-    func stopReadMode()
+    private func stopReadMode()
     {
         stopTextData()
         stopBgMovie()
@@ -242,7 +242,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // BGムービー開始
-    func startBgMovie(fadeIn: Bool)
+    private func startBgMovie(fadeIn: Bool)
     {
         // 背景静止画設定
         setBgImage(page: currentPage - 2)
@@ -280,7 +280,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // BGムービー停止
-    func stopBgMovie()
+    private func stopBgMovie()
     {
         // BGムービー停止
         bgMovie.pause()
@@ -290,7 +290,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // 背景の静止画を設定
-    func setBgImage(page: Int)
+    private func setBgImage(page: Int)
     {
         if page < 0 || page >= PAGE_NUM {
             return
@@ -310,7 +310,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // テキスト表示／再生開始
-    func startTextData()
+    private func startTextData()
     {
         sentenceCounter = 0
         readTextData()
@@ -318,7 +318,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // テキスト表示／再生停止
-    func stopTextData()
+    private func stopTextData()
     {
         readAudio.stop()
         readAudio = nil
@@ -327,7 +327,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // テキストファイル読み込み
-    func readTextData()
+    private func readTextData()
     {
         let path = Bundle.main.path(forResource: DataManager.getReadTextFile(page: currentPage), ofType: "txt")
         let text: String
@@ -370,7 +370,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // テキストデータ表示／再生設定
-    func setTextData()
+    private func setTextData()
     {
         if readCounter >= readDataArray.count {
             if sentenceCounter >= sentenceArray.count {
@@ -455,7 +455,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
         readCounter += 1
     }
 
-    func removeReadData(readDataArray: inout [ReadData])
+    private func removeReadData(readDataArray: inout [ReadData])
     {
         for readData in readDataArray {
             readData.textLabel.removeFromSuperview()
@@ -515,7 +515,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // メインメニューに戻る
-    func returnMenu(fadeout: Bool)
+    private func returnMenu(fadeout: Bool)
     {
         if fadeout {
             enableTouch = false
@@ -527,7 +527,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // メインメニューに戻る
-    func endReturnMenu()
+    private func endReturnMenu()
     {
         indexView.indexViewDelegate = nil
         
@@ -554,7 +554,7 @@ class ReadModeViewController: UIViewController, AVAudioPlayerDelegate, UIScrollV
     }
 
     // ページ選択後よむモード開始
-    func endSelectPage()
+    private func endSelectPage()
     {
         UIView.animate(withDuration: 0.5,
                        animations: {self.view.alpha = 0.0},

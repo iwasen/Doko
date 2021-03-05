@@ -10,11 +10,11 @@ import UIKit
 class ThumbnailView: UIImageView {
     var page: Int = 0
         
-        // サムネイルタッチ処理
-        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
-        {
-            // 親ビューに通知
-            let indexView = superview as! IndexView
-            indexView.touchThumbnail(page: page)
-        }
+    // サムネイルタッチ処理
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
+    {
+        // 親ビューに通知
+        let indexView = superview as! IndexView
+        indexView.touchThumbnail(page: page)
+    }
 }

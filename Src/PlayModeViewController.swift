@@ -89,7 +89,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // 操作ガイド表示
-    func displayGuide()
+    private func displayGuide()
     {
         guideImageView.image = DataManager.getImage(jpnFileName: "kddk1j_guide_asob", engFileName: "kddk1e_guide_asobu")
         startButton.setImage(DataManager.getImage(jpnFileName: "kddk1j_btn_guide_n___x423y666w172h35", engFileName: "kddk1e_btn_guide_n___x423y666w172h35"), for: UIControl.State.normal)
@@ -112,7 +112,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // ２回目以降
-    func continueGuide()
+    private func continueGuide()
     {
         // インデックス表示
         indexView.openIndex(page: -1, animation: false)
@@ -147,20 +147,20 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // インデックス消去
-    func endContinueGuide()
+    private func endContinueGuide()
     {
         indexView.closeIndex(animation: true, endMethod: endContinueGuide2)
     }
 
     // マスクビュー消去
-    func endContinueGuide2()
+    private func endContinueGuide2()
     {
         maskView.removeFromSuperview()
         startPlayFirst()
     }
 
     // あそぶモードの開始
-    func startPlayFirst()
+    private func startPlayFirst()
     {
         endButton.isHidden = false
         indexButton.isHidden = false
@@ -173,7 +173,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // あそぶモード開始
-    func startPlayMode()
+    private func startPlayMode()
     {
         // 現在ページ保存
         DataManager.playCurrentPage = currentPage
@@ -193,7 +193,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // あそぶモード停止
-    func stopPlayMode()
+    private func stopPlayMode()
     {
         // 当たりボタンを削除
         for atariButton in atariButtonArray {
@@ -233,7 +233,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // 背景動画、BGM再生
-    func setupBgView()
+    private func setupBgView()
     {
         // BGM再生
         bgmAudio = SoundManager.initializeSound(soundFile: DataManager.getBgSoundFile(page: currentPage))
@@ -252,7 +252,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　アイテム名読み上げ待ち
-    func readItemName()
+    private func readItemName()
     {
         // アイテム表示まで2秒待つ
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
@@ -261,7 +261,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　アイテム名読み上げタイマーセット
-    func readItemName2()
+    private func readItemName2()
     {
         // アイテム名読み上げカウンタクリア
         itemCount = 0
@@ -275,7 +275,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　アイテム名読み上げタイマー
-    @objc func readTextTimer(timer: Timer)
+    @objc private func readTextTimer(timer: Timer)
     {
         if readStopFlag {
             timer.invalidate()
@@ -315,7 +315,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　アイテム名（テキスト表示/音声再生）
-    func setItemText()
+    private func setItemText()
     {
         if readStopFlag {
             return
@@ -337,7 +337,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　当たりボタン生成
-    func setItemButton()
+    private func setItemButton()
     {
         for i in 0 ..< FIND_ITEM_NUM {
             if !DataManager.playFindItem[currentPage][i].findFlag {
@@ -347,13 +347,12 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // 当たりボタン、アイテム名表示
-    func setFindItem()
+    private func setFindItem()
     {
-        var i: Int
         var textSize: [CGSize] = [CGSize](repeating: CGSize(width: 0, height: 0), count: FIND_ITEM_NUM)
 
         // 全部回答済みなら再度選択
-        i = 0
+        var i = 0
         while i < FIND_ITEM_NUM {
             if !DataManager.playFindItem[currentPage][i].findFlag {
                 break
@@ -421,11 +420,9 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // アイテムクリック
-    @objc func clickItem(inSender: NSObject)
+    @objc private func clickItem(inSender: NSObject)
     {
-        var i: Int
-        
-        i = 0
+        var i = 0
         while i < FIND_ITEM_NUM {
             if inSender == atariButtonArray[i] {
                 break
@@ -475,7 +472,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　当たりパーティクル再生
-    func viewAtariParticle(point: CGPoint)
+    private func viewAtariParticle(point: CGPoint)
     {
         let imageArray: [UIImage] = [
                                UIImage(named: "fx_atari_a0001.png")!,
@@ -511,13 +508,13 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // 当たりパーティクル再生終了
-    func endAtariParticle(atariAnimation: UIImageView)
+    private func endAtariParticle(atariAnimation: UIImageView)
     {
         atariAnimation.removeFromSuperview()
     }
 
     // コンプリート画面処理
-    func playComplete()
+    private func playComplete()
     {
         if completeStopFlag {
             return
@@ -537,7 +534,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // コンプリート画面処理2
-    func playComplete2()
+    private func playComplete2()
     {
         if completeStopFlag {
             return
@@ -561,20 +558,22 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // コンプリート画面処理3
-    func playComplete3()
+    private func playComplete3()
     {
         if completeStopFlag {
             return
         }
         
         let rect = DataManager.getPlayAtariRect(page: currentPage, index: DataManager.playFindItem[currentPage][completeCounter].itemIndex)
+        
         completeCounter += 1
+        
         let point = CGPoint(x: rect.origin.x + rect.size.width / 2, y: rect.origin.y + rect.size.height / 2)
         viewAtariParticle(point: point)
     }
 
     // コンプリート画面処理4
-    func playComplete4()
+    private func playComplete4()
     {
         if completeStopFlag {
             return
@@ -584,7 +583,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // コンプリート画面処理5
-    func playComplete5()
+    private func playComplete5()
     {
         if completeStopFlag {
             return
@@ -603,7 +602,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     //　メニューに戻る
-    func returnMenu()
+    private func returnMenu()
     {
         readStopFlag = true
         enableTouch = false
@@ -613,7 +612,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // メニューに戻る
-    func endReturnMenu()
+    private func endReturnMenu()
     {
         // あそぶモード停止
         stopPlayMode()
@@ -676,7 +675,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         indexView.closeIndex(animation: true, endMethod: endSelectPage)
     }
 
-    func endSelectPage()
+    private func endSelectPage()
     {
         UIView.animate(withDuration: 0.5,
                        animations: {self.view.alpha = 0.0},

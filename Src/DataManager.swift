@@ -561,7 +561,7 @@ class DataManager
         readUserDefault()
     }
 
-    class func readUserDefault()
+    class private func readUserDefault()
     {
         let ud = UserDefaults.standard
 
@@ -573,6 +573,8 @@ class DataManager
         playCurrentPage = ud.integer(forKey: "PlayCurrentPage")
         if let data = UserDefaults.standard.value(forKey:"PlayFindItem") as? Data {
             playFindItem = try! PropertyListDecoder().decode([[PlayFindItem]].self, from: data) as [[PlayFindItem]]
+        } else {
+            initPlayFindData()
         }
 
         // 初回は本体のロケール設定に合わせる
@@ -599,7 +601,7 @@ class DataManager
         
         for i in 0 ..< FIND_ITEM_NUM {
             while true {
-                r = Int.random(in: 0 ..< DataManager.playPageData[page].itemNum)
+                r = Int.random(in: 0 ..< playPageData[page].itemNum)
                 var j = 0
                 while j < i {
                     if r == playFindItem[page][j].itemIndex {
