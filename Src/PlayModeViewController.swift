@@ -271,11 +271,11 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
         itemCount += 1
 
         // ２つ目以降のアイテム読み上げタイマー設定
-        readTextTimer = Timer.scheduledTimer(timeInterval: 2.8, target: self, selector: #selector(readTextTimer(timer:)), userInfo: nil, repeats: true)
+        readTextTimer = Timer.scheduledTimer(withTimeInterval: 2.8, repeats: true, block: {(timer) in self.readTextTimerFunc(timer: timer)})
     }
 
     //　アイテム名読み上げタイマー
-    @objc private func readTextTimer(timer: Timer)
+    private func readTextTimerFunc(timer: Timer)
     {
         if readStopFlag {
             timer.invalidate()
@@ -399,7 +399,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
             // 当たりボタン生成
             let atariButton = UIButton(type: UIButton.ButtonType.roundedRect)
             atariButton.frame = DataManager.getPlayAtariRect(page: currentPage, index: DataManager.playFindItem[currentPage][i].itemIndex)
-            atariButton.addTarget(self, action:#selector(clickItem), for: UIControl.Event.touchUpInside)
+            atariButton.addAction(UIAction(handler: {_ in self.clickItem(inSender: atariButton)}), for: UIControl.Event.touchUpInside)
             atariButton.isHidden = true
             atariView.addSubview(atariButton)
             atariButtonArray.append(atariButton)
@@ -420,7 +420,7 @@ class PlayModeViewController: UIViewController, UIScrollViewDelegate, IndexViewD
     }
 
     // アイテムクリック
-    @objc private func clickItem(inSender: NSObject)
+    private func clickItem(inSender: UIButton)
     {
         var i = 0
         while i < FIND_ITEM_NUM {

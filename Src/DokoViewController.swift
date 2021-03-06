@@ -82,7 +82,7 @@ class DokoViewController: UIViewController
         // オープニングムービー再生
         let moviePath = Bundle.main.path(forResource: DataManager.lang == LANG_JPN ? "kddk1j_op" : "kddk1e_op", ofType: "mp4")!
         let openingMovie = AVPlayer(url: URL(fileURLWithPath: moviePath))
-        NotificationCenter.default.addObserver(self, selector: #selector(endOpeningMovie), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: openingMovie.currentItem)
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: openingMovie.currentItem, queue: nil, using: {_ in self.endOpeningMovie()})
         openingMovieLayer = AVPlayerLayer(player: openingMovie)
         openingMovieLayer.frame = CGRect(x: 0, y: 0, width: SCREEN_WIDTH, height: SCREEN_HEIGHT)
         view.layer.addSublayer(openingMovieLayer)
@@ -93,7 +93,7 @@ class DokoViewController: UIViewController
     }
 
     // オープニングムービー終了
-    @objc private func endOpeningMovie()
+    private func endOpeningMovie()
     {
         // オープニングムービー再生中フラグリセット
         inOpeningMovie = false

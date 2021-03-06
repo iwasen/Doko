@@ -27,15 +27,10 @@ class SoundManager
     // サウンドファイル名からAVAudioPlayerを作成
     class func initializeSound(soundFile: String) -> AVAudioPlayer
     {
-        var audioPlayer: AVAudioPlayer?
-        
         let path = Bundle.main.path(forResource: soundFile, ofType: "mp3")
-        do {
-            audioPlayer = try AVAudioPlayer(contentsOf: URL(fileURLWithPath: path!))
-        } catch _ {
-        }
+        let audioPlayer = try! AVAudioPlayer(contentsOf: URL(fileURLWithPath: path!))
         
-        return audioPlayer!
+        return audioPlayer
     }
 
     // あそぶモードボタンの音を再生
